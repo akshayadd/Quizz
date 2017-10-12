@@ -1,8 +1,8 @@
 default: &default
-  adapter: mysql2
+  adapter: postgresql
   pool: 5
   database: ruby_gem
-  username: root
+  username: postgres
   password: root
   timeout: 5000
   host: localhost
