@@ -1,0 +1,17 @@
+default: &default
+  adapter: mysql2
+  pool: 5
+  database: ruby_gem
+  username: root
+  password: root
+  timeout: 5000
+  host: localhost
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
