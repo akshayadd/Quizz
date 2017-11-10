@@ -21,6 +21,17 @@ Rails.application.routes.draw do
       get  'page-nine',        to: 'quizzes#page_nine',                as: 'page_nine'
       get  'page-ten',         to: 'quizzes#page_ten',                 as: 'page_ten'
 
+      get  'one',              to: 'image_quizzes#page_one',           as: 'one'
+      get  'two',              to: 'image_quizzes#page_two',           as: 'two'
+      get  'three',            to: 'image_quizzes#page_three',         as: 'three'
+      get  'four',             to: 'image_quizzes#page_four',          as: 'four'
+      get  'five',             to: 'image_quizzes#page_five',          as: 'five'
+      get  'six',              to: 'image_quizzes#page_six',           as: 'six'
+      get  'seven',            to: 'image_quizzes#page_seven',         as: 'seven'
+      get  'eight',            to: 'image_quizzes#page_eight',         as: 'eight'
+      get  'nine',             to: 'image_quizzes#page_nine',          as: 'nine'
+      get  'ten',              to: 'image_quizzes#page_ten',           as: 'ten'
+
       post 'payment-request',  to: 'payments#payment_request',         as: 'payment'
       get  'requested-payment',to: 'payments#requested_payment',       as: 'payments'
 
