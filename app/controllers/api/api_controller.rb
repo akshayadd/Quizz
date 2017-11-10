@@ -17,7 +17,6 @@ class Api::ApiController < ActionController::API
         data:             data,
         status:           status,
         access_token:     access_token,
-        employee_details: employee_details,
         message:          message
       }
     )

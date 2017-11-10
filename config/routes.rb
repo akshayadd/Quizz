@@ -20,6 +20,11 @@ Rails.application.routes.draw do
       get  'page-eight',       to: 'quizzes#page_eight',               as: 'page_eight'
       get  'page-nine',        to: 'quizzes#page_nine',                as: 'page_nine'
       get  'page-ten',         to: 'quizzes#page_ten',                 as: 'page_ten'
+
+      post 'payment-request',  to: 'payments#payment_request',         as: 'payment'
+      get  'requested-payment',to: 'payments#requested_payment',       as: 'payments'
+
+      post 'invitation',       to: 'invitations#create_invitation',    as: 'invitation'
     end
   end
 end
