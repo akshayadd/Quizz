@@ -5,7 +5,7 @@ class Api::V1::QuizzesController < Api::ApiController
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10)
+    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).map(&:to_hash)
     render_response(result)
   end
 
@@ -15,7 +15,7 @@ class Api::V1::QuizzesController < Api::ApiController
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(10)
+    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(10).map(&:to_hash)
     render_response(result)
   end
 
@@ -25,7 +25,7 @@ class Api::V1::QuizzesController < Api::ApiController
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(20)
+    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(20).map(&:to_hash)
     render_response(result)
   end
 
@@ -35,7 +35,7 @@ class Api::V1::QuizzesController < Api::ApiController
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(30)
+    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(30).map(&:to_hash)
     render_response(result)
   end
 
@@ -45,7 +45,7 @@ class Api::V1::QuizzesController < Api::ApiController
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(40)
+    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(40).map(&:to_hash)
     render_response(result)
   end
 
@@ -55,7 +55,7 @@ class Api::V1::QuizzesController < Api::ApiController
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(50)
+    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(50).map(&:to_hash)
     render_response(result)
   end
 
@@ -65,7 +65,7 @@ class Api::V1::QuizzesController < Api::ApiController
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(60)
+    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(60).map(&:to_hash)
     render_response(result)
   end
 
@@ -75,7 +75,7 @@ class Api::V1::QuizzesController < Api::ApiController
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(70)
+    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(70).map(&:to_hash)
     render_response(result)
   end
 
@@ -85,7 +85,7 @@ class Api::V1::QuizzesController < Api::ApiController
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(80)
+    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(80).map(&:to_hash)
     render_response(result)
   end
 
@@ -95,7 +95,7 @@ class Api::V1::QuizzesController < Api::ApiController
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(90)
+    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(90).map(&:to_hash)
     render_response(result)
   end
 end

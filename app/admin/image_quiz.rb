@@ -22,7 +22,7 @@ ActiveAdmin.register ImageQuiz do
   filter :answer
 
   form do |f|
-    f.inputs 'ImageQuiz' do
+    f.inputs 'Image Quiz' do
       f.input :added_date, as: :datepicker
       f.input :content
       f.input :option_a
