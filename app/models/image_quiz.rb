@@ -7,7 +7,7 @@ class ImageQuiz < ApplicationRecord
   def to_hash
     {
       content:       self.try(:content),
-      image:         self.try(:image).try(:url),
+      image:         self.try(:image).try(:path),
       option_a:      self.try(:option_a),
       option_b:      self.try(:option_b),
       answer:        self.try(:answer)
