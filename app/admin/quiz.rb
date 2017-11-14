@@ -3,6 +3,25 @@ ActiveAdmin.register Quiz do
   actions :index, :show, :create, :new, :edit, :update, :destroy
   permit_params :content, :answer, :option_a, :option_b, :option_c, :option_d, :added_date
 
+  controller do
+    def create
+      quiz = Quiz.new(permitted_params[:quiz])
+      if quiz.save
+        respond_to do |format|
+          format.html do
+            redirect_to(
+              new_admin_quiz_path,
+              notice: 'Quiz is successfully created'
+            )
+          end
+          format.json do
+            head :no_content
+          end
+        end
+      end
+    end
+  end
+
   index do
     selectable_column
     id_column

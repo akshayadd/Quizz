@@ -1,5 +1,5 @@
 class Api::V1::QuizzesController < Api::ApiController
-  def page_one
+  def gk_quiz
     result = {
       quiz: [],
       status:    200,
@@ -9,93 +9,93 @@ class Api::V1::QuizzesController < Api::ApiController
     render_response(result)
   end
 
-  def page_two
+  def cricket_quiz
     result = {
       quiz: [],
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(10).map(&:to_hash)
+    result[:quiz] = CricketQuiz.where(added_date: Date.today).limit(10).map(&:to_hash)
     render_response(result)
   end
 
-  def page_three
+  def bollywood_quiz
     result = {
       quiz: [],
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(20).map(&:to_hash)
+    result[:quiz] = Bollywood.where(added_date: Date.today).limit(10).map(&:to_hash)
     render_response(result)
   end
 
-  def page_four
+  def movies_quiz
     result = {
       quiz: [],
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(30).map(&:to_hash)
+    result[:quiz] = MovieQuiz.where(added_date: Date.today).limit(10).map(&:to_hash)
     render_response(result)
   end
 
-  def page_five
+  def technology_quiz
     result = {
       quiz: [],
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(40).map(&:to_hash)
+    result[:quiz] = BooleanQuiz.where(added_date: Date.today).limit(10).map(&:to_hash)
     render_response(result)
   end
 
-  def page_six
+  def image_boolean_one
     result = {
       quiz: [],
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(50).map(&:to_hash)
+    result[:quiz] = ImageBoolean.where(added_date: Date.today).limit(10).map(&:to_hash)
     render_response(result)
   end
 
-  def page_seven
+  def image_boolean_two
     result = {
       quiz: [],
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(60).map(&:to_hash)
+    result[:quiz] = ImageQuiz.where(added_date: Date.today).limit(10).map(&:to_hash)
     render_response(result)
   end
 
-  def page_eight
+  def swipe_celebrity
     result = {
       quiz: [],
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(70).map(&:to_hash)
+    result[:quiz] = SwipeQuiz.where(added_date: Date.today).limit(10).map(&:to_hash)
     render_response(result)
   end
 
-  def page_nine
+  def swipe_knowledge
     result = {
       quiz: [],
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(80).map(&:to_hash)
+    result[:quiz] = SwipeOne.where(added_date: Date.today).limit(10).map(&:to_hash)
     render_response(result)
   end
 
-  def page_ten
+  def swipe_insta
     result = {
       quiz: [],
       status:    200,
       message:   "Success"
     }
-    result[:quiz] = Quiz.where(added_date: Date.today).limit(10).offset(90).map(&:to_hash)
+    result[:quiz] = SwipeInstum.where(added_date: Date.today).limit(10).map(&:to_hash)
     render_response(result)
   end
 end

@@ -1,16 +1,16 @@
-ActiveAdmin.register ImageQuiz do
-  menu priority: 9
+ActiveAdmin.register ImageBoolean do
+  menu priority: 10
   actions :index, :show, :create, :new, :edit, :update, :destroy
   permit_params :content, :answer, :option_a, :option_b, :added_date, :image
 
   controller do
     def create
-      quiz = ImageQuiz.new(permitted_params[:image_quiz])
+      quiz = ImageBoolean.new(permitted_params[:image_boolean])
       if quiz.save
         respond_to do |format|
           format.html do
             redirect_to(
-              new_admin_image_quiz_path,
+              new_admin_image_boolean_path,
               notice: 'Quiz is successfully created'
             )
           end
@@ -41,7 +41,7 @@ ActiveAdmin.register ImageQuiz do
   filter :answer
 
   form do |f|
-    f.inputs 'Image Quiz' do
+    f.inputs 'Image Boolean Quiz' do
       f.input :added_date, as: :datepicker
       f.input :content
       f.input :option_a
@@ -53,8 +53,8 @@ ActiveAdmin.register ImageQuiz do
   end
 
   show do
-    panel 'Image Quiz' do
-      attributes_table_for image_quiz do
+    panel 'Image Boolean Quiz' do
+      attributes_table_for image_boolean do
         row :added_date
         row :content
         row :option_a

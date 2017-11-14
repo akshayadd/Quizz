@@ -1,5 +1,5 @@
 ActiveAdmin.register Invitation do
-  menu priority: 6
+  menu priority: 15
   actions :index
 
   index do

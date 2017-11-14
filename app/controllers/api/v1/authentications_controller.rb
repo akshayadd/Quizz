@@ -1,86 +1,68 @@
 class Api::V1::AuthenticationsController < Api::ApiController
-  before_action :check_params, except: [:sign_up]
-
   def sign_up
-    result = User.create_user_entry(params[:user_data])
+    result = User.create_user_entry(params[:authentication])
     render_response(result)
   end
 
   #
-  ## Email through
-  #
-  # def sign_in
-  #   user = User.find_by(
-  #     email:    params[:user][:email],
-  #     disabled: false
-  #   )
-  #   if user
-  #     if user.valid_password?(params[:user][:password])
-  #       user.generate_token
-  #       result[:message] = 'Login Susscessfuly'
-  #       result[:data] = user.user_details,
-  #         result[:access_token] = user.access_token
-  #       render_response(result)
-  #     else
-  #       error_response('User Password Not Match')
-  #     end
-  #   else
-  #     error_response('User Not Found')
-  #   end
-  # end
-
-  #
-  ## OTP through
+  ## OTP through Sign In
   #
   def sign_in
     result = {
       status:  401,
-      message: [t('api.authentications.sign_in.alert')]
+      message: ["User is not authorized"]
     }
-    user = User.find_by(
-                contact_number:    params[:contact_number],
-                disabled: false
-              ) unless params[:contact_number].blank?
-    otp  = SendOtp.send_otp(user.contact_number) unless user.blank?
 
-    if otp and user.update(mobile_otp: otp)
-      result[:status]  = 200
-      result[:message] = [t('api.authentications.sign_in.success')]
+    user = User.where("contact_number = ? and disabled = false", params[:contact_number]) unless params[:contact_number].blank?
+
+    if user.present?
+      otp = Otp::GenOtp.send_otp(user.contact_number) unless user.contact_number.blank?
+
+      if otp.present? && user.update(mobile_otp: otp)
+        result[:status]  = 200
+        result[:message] = ["Success"]
+      end
+      render_response(result)
     end
     render_response(result)
   end
 
-
-  def forgot_password
-    user = User.find_by(
-      email: params[:employee][:email],
-      disabled: false
-    )
-    if user
-      User.send_reset_password_instructions
-      success_response(
-        'Reset Link Send Susscessfuly',
-        'Reset Link Send Susscessfuly'
+  def verify_mobile_otp
+    result = {
+      status:        401,
+      message:       ["Your Account is not Registered"]
+    }
+    if params[:contact_number] && params[:otp]
+      user =  User.find_by(
+        contact_number:  params[:contact_number],
+        mobile_otp:      params[:otp],
+        disabled:   false
       )
-    else
-      error_response('User Not Found')
+      result[:message] = "Incorrect OTP"
+
+      if user.present? && user.update(mobile_otp: nil)
+        result[:status]  = 200
+        result[:message] = ["Success"]
+        result[:user_details] = user.user_details
+      end
     end
+    render_response(result)
   end
 
   def request_otp
     result = {
       status:  401,
-      message: [t('api.authentications.request_otp.alert')]
+      message: 'Not a valid call'
     }
     user  = User.find_by(
       contact_number:    params[:contact_number],
       disabled: false
     )
     if user
-      otp = SendOtp.send_otp(user.contact_number)
+      otp = Otp::GenOtp.send_otp(user.contact_number)
       if otp and user.update(mobile_otp: otp)
         result[:status]  = 200
-        result[:message] = [t('api.authentications.request_otp.success')]
+        result[:message] = 'Otp successfully sent'
       else
         result[:message] = user.errors.full_messages.join(',')
       end
@@ -88,8 +70,8 @@ class Api::V1::AuthenticationsController < Api::ApiController
     render_response(result)
   end
 
-  def check_params
-    error_response('Params Not Match') if params[:user].blank?
-    error_response('Email Not Found') if params[:user][:email].blank?
+  def update_coin
+    result = User.update_coins(params[:authentication])
+    render_response(result)
   end
 end

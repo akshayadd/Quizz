@@ -1,5 +1,5 @@
 ActiveAdmin.register Payment do
-  menu priority: 5
+  menu priority: 14
   actions :index, :show
   permit_params :amount, :user_id, :payment_mode, :bank_name, :ac_number, :ifsc_number
 

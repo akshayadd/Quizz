@@ -1,33 +1,29 @@
 class Payment < ApplicationRecord
   belongs_to :user
 
-  def self.create_payment_request(payment_request_data)
+  def self.create_payment_request_entry(payment_request_data)
     result = {
-      status:  204,
-      message: ["Your request successfully sent."],
+      status:       204,
+      message:      ["Your request not sent."]
     }
 
-    user =  User.find_by(
-                "contact_number = ? AND ",
-                user_data["contact_number"]
-              )
+    user =  User.find_by("id = ? ", payment_request_data["user_id"])
 
-    if user.blank?
-      user                      = User.find_or_initialize_by(
-                                      contact_number: user_data["contact_number"]
-                                    )
-      user.contact_number       = user_data["contact_number"]
-      user.first_name           = user_data["first_name"]
-      user.last_name            = user_data["last_name"]
-      user.email                = user_data["email"]
-      user.password             = user_data["password"]
+    if user.present?
+      payment                 = Payment.create(user_id: user.id)
+      payment.amount          = payment_request_data["amount"]
+      payment.status          = payment_request_data["status"]
+      payment.payment_mode    = payment_request_data["payment_mode"]
+      
+      if payment.payment_mode == 1
+        payment.bank_name     = payment_request_data["bank_name"]
+        payment.ac_number     = payment_request_data["ac_number"]
+        payment.ifsc_number   = payment_request_data["ifsc_number"]
+      end
 
-      if user.save
-        otp = SendOtp.send_otp(user.contact_number)
-        if otp && user.update(mobile_otp: otp)
-          result[:status]  = 200
-          result[:message] = ["Success"]
-        end
+      if payment.save
+        result[:status]       = 200
+        result[:message]      = ["Success"]
       else
         result[:message]   = user.errors.full_messages
       end

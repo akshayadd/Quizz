@@ -10,7 +10,7 @@ class Invitation < ApplicationRecord
     if user.present?
       invitation = Invitation.new(user_id: user.id)
       invitation.reffer_number = invitation_data["reffer_number"]
-      invitation.invitation_token = invitation_data["token"]
+      # invitation.invitation_token = invitation_data["token"]
       invitation.invitation_accept = false
 
       if invitation.save

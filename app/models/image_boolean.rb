@@ -1,4 +1,4 @@
-class ImageQuiz < ApplicationRecord
+class ImageBoolean < ApplicationRecord
   has_attached_file :image,
     styles: { medium: "92x92#", thumb: "32x32#" },
     default_url: '/default/images/users/:style/no-image.png'

@@ -1,16 +1,16 @@
-ActiveAdmin.register ImageQuiz do
-  menu priority: 9
+ActiveAdmin.register SwipeOne do
+  menu priority: 12
   actions :index, :show, :create, :new, :edit, :update, :destroy
-  permit_params :content, :answer, :option_a, :option_b, :added_date, :image
+  permit_params :added_date, :image
 
   controller do
     def create
-      quiz = ImageQuiz.new(permitted_params[:image_quiz])
+      quiz = SwipeOne.new(permitted_params[:swipe_one])
       if quiz.save
         respond_to do |format|
           format.html do
             redirect_to(
-              new_admin_image_quiz_path,
+              new_admin_swipe_one_path,
               notice: 'Quiz is successfully created'
             )
           end
@@ -26,10 +26,6 @@ ActiveAdmin.register ImageQuiz do
     selectable_column
     id_column
     column :added_date
-    column :content
-    column :option_a
-    column :option_b
-    column :answer
     column :image do |ad|
       image_tag ad.image.url(:thumb)
     end
@@ -37,29 +33,19 @@ ActiveAdmin.register ImageQuiz do
   end
 
   filter :added_date
-  filter :content
-  filter :answer
 
   form do |f|
-    f.inputs 'Image Quiz' do
+    f.inputs 'Swipe One Quiz' do
       f.input :added_date, as: :datepicker
-      f.input :content
-      f.input :option_a
-      f.input :option_b
-      f.input :answer
       f.input :image
     end
     f.actions
   end
 
   show do
-    panel 'Image Quiz' do
-      attributes_table_for image_quiz do
+    panel 'Swipe One Quiz' do
+      attributes_table_for swipe_one do
         row :added_date
-        row :content
-        row :option_a
-        row :option_b
-        row :answer
         row :image do |ad|
           image_tag ad.image.url(:medium)
         end

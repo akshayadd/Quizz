@@ -1,4 +1,4 @@
-class Quiz < ApplicationRecord
+class CricketQuiz < ApplicationRecord
   def to_hash
     {
       content:   content,

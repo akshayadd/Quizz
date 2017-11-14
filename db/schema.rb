@@ -10,9 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171010160810) do
+ActiveRecord::Schema.define(version: 20171114171842) do
 
-  create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -29,7 +32,89 @@ ActiveRecord::Schema.define(version: 20171010160810) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "payments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "bollywoods", force: :cascade do |t|
+    t.string "content"
+    t.string "option_a", default: ""
+    t.string "option_b", default: ""
+    t.string "option_c", default: ""
+    t.string "option_d", default: ""
+    t.string "answer", null: false
+    t.date "added_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "boolean_quizzes", force: :cascade do |t|
+    t.string "content"
+    t.string "option_a", default: ""
+    t.string "option_b", default: ""
+    t.string "answer", null: false
+    t.date "added_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cricket_quizzes", force: :cascade do |t|
+    t.string "content"
+    t.string "option_a", default: ""
+    t.string "option_b", default: ""
+    t.string "option_c", default: ""
+    t.string "option_d", default: ""
+    t.string "answer", null: false
+    t.date "added_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "image_booleans", force: :cascade do |t|
+    t.string "content"
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.string "option_a", default: ""
+    t.string "option_b", default: ""
+    t.string "answer", null: false
+    t.date "added_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "image_quizzes", force: :cascade do |t|
+    t.string "content"
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.string "option_a", default: ""
+    t.string "option_b", default: ""
+    t.string "answer", null: false
+    t.date "added_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "invitations", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "reffer_number", null: false
+    t.boolean "invitation_accept", default: false
+    t.datetime "invitation_accepted_at"
+    t.string "invitation_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "movie_quizzes", force: :cascade do |t|
+    t.string "content"
+    t.string "option_a", default: ""
+    t.string "option_b", default: ""
+    t.string "answer", null: false
+    t.date "added_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "payments", force: :cascade do |t|
     t.decimal "amount", precision: 4, scale: 2
     t.integer "user_id"
     t.boolean "payment_mode"
@@ -40,14 +125,20 @@ ActiveRecord::Schema.define(version: 20171010160810) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "quizzes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "quizzes", force: :cascade do |t|
     t.string "content"
     t.string "option_a", default: ""
     t.string "option_b", default: ""
     t.string "option_c", default: ""
     t.string "option_d", default: ""
     t.string "answer", null: false
-    t.datetime "added_date"
+    t.date "added_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "swipe_insta", force: :cascade do |t|
+    t.date "added_date"
     t.string "image_file_name"
     t.string "image_content_type"
     t.integer "image_file_size"
@@ -56,7 +147,27 @@ ActiveRecord::Schema.define(version: 20171010160810) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "swipe_ones", force: :cascade do |t|
+    t.date "added_date"
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "swipe_quizzes", force: :cascade do |t|
+    t.date "added_date"
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "email", default: "", null: false
@@ -64,10 +175,12 @@ ActiveRecord::Schema.define(version: 20171010160810) do
     t.integer "coins"
     t.string "contact_number", null: false
     t.string "access_token", limit: 32
-    t.datetime "mobile_otp"
+    t.string "mobile_otp"
     t.boolean "disabled", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "gems", default: 0
+    t.string "reffer_number", default: ""
   end
 
 end

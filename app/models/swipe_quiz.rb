@@ -1,4 +1,4 @@
-class ImageQuiz < ApplicationRecord
+class SwipeQuiz < ApplicationRecord
   has_attached_file :image,
     styles: { medium: "92x92#", thumb: "32x32#" },
     default_url: '/default/images/users/:style/no-image.png'
@@ -6,11 +6,7 @@ class ImageQuiz < ApplicationRecord
 
   def to_hash
     {
-      content:  content,
-      image:    image.try(:url),
-      option_a: option_a,
-      option_b: option_b,
-      answer:   answer
+      image: image.try(:url)
     }
   end
 end
