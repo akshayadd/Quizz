@@ -1,4 +1,4 @@
-class CricketQuiz < ActiveRecord::Migration[5.1]
+class CreateCricketQuizzes < ActiveRecord::Migration[5.1]
   def change
     create_table :cricket_quizzes do |t|
       t.string      :content
