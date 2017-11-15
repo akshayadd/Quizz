@@ -10,7 +10,7 @@ class Payment < ApplicationRecord
     user =  User.find_by("id = ? ", payment_request_data["user_id"])
 
     if user.present?
-      payment                 = Payment.create(user_id: user.id)
+      payment                 = Payment.new(user_id: user.id)
       payment.amount          = payment_request_data["amount"]
       payment.status          = payment_request_data["status"]
       payment.payment_mode    = payment_request_data["payment_mode"]
@@ -22,6 +22,8 @@ class Payment < ApplicationRecord
       end
 
       if payment.save
+        coin = user.coins
+        user.update(coins: coin - payment.amount)
         result[:status]       = 200
         result[:message]      = ["Success"]
       else

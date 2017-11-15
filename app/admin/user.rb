@@ -7,7 +7,8 @@ ActiveAdmin.register User do
     :last_name,
     :email,
     :password,
-    :coins
+    :coins,
+    :gems
   )
 
   filter :first_name
@@ -22,6 +23,7 @@ ActiveAdmin.register User do
     column :email
     column :coins
     column :contact_number
+    column :gems
     column :created_at
     actions
   end
@@ -42,6 +44,7 @@ ActiveAdmin.register User do
         row :last_name
         row :email
         row :coins
+        row :gems
         row :contact_number
       end
     end

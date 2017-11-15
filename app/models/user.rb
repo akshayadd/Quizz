@@ -21,8 +21,8 @@ class User < ApplicationRecord
       if user.save
         otp = Otp::GenOtp.send_otp(user.contact_number) unless user.contact_number.blank?
         if otp.present? && user.update(mobile_otp: otp)
-          if user.reffer_number.present?
-            refer = User.find_by(contact_number: user.reffer_number)
+          refer = User.find_by(contact_number: user.reffer_number) if user.reffer_number.present?
+          if refer.present?
             refer_gem = refer.gems
             refer.update(gems: refer_gem + 1)
             user.update(gems: 1)
