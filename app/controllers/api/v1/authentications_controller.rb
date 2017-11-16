@@ -13,16 +13,16 @@ class Api::V1::AuthenticationsController < Api::ApiController
       message: ["User is not authorized"]
     }
 
-    user = User.where("contact_number = ? and disabled = false", params[:contact_number]) unless params[:contact_number].blank?
+    user = User.find_by(contact_number: params[:contact_number], disabled: false) unless params[:contact_number].blank?
 
     if user.present?
-      otp = Otp::GenOtp.send_otp(user.contact_number) unless user.contact_number.blank?
+      phone = user.try(:contact_number)
+      otp = Otp::GenOtp.send_otp(phone) unless phone.blank?
 
       if otp.present? && user.update(mobile_otp: otp)
         result[:status]  = 200
         result[:message] = ["Success"]
       end
-      render_response(result)
     end
     render_response(result)
   end
