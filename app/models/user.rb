@@ -64,10 +64,10 @@ class User < ApplicationRecord
   end
 
   def user_details
-    User.find_by(
+    User.where(
       contact_number: self.contact_number,
       disabled: false
-    ).map(&:to_json)
+    ).limit(1).map(&:to_json)
   end
 
   def name
