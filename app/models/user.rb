@@ -8,7 +8,7 @@ class User < ApplicationRecord
       message: ["Your are already Registered please try to Sign In"],
     }
 
-    user = User.find_by(contact_number: user_data[:contact_number])
+    user = User.where(contact_number: user_data[:contact_number]).limit(1)
 
     if user.blank?
       user                 = User.new(contact_number: user_data[:contact_number])
@@ -19,7 +19,8 @@ class User < ApplicationRecord
       user.coins           = 0
 
       if user.save
-        otp = Otp::GenOtp.send_otp(user.contact_number) unless user.contact_number.blank?
+        phone = user.try(:contact_number)
+        otp = Otp::GenOtp.send_otp(phone) unless phone.blank?
         if otp.present? && user.update(mobile_otp: otp)
           refer = User.find_by(contact_number: user.reffer_number) if user.reffer_number.present?
           if refer.present?

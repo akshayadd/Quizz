@@ -11,6 +11,24 @@ ActiveAdmin.register User do
     :gems
   )
 
+  controller do
+    def destroy
+      @user = User.find_by_id(params[:id])
+      @user.update(disabled: true)
+      respond_to do |format|
+        format.html do
+          redirect_to(
+            admin_users_path,
+            notice: 'User was successfully destroyed.'
+          )
+        end
+        format.json do
+          head :no_content
+        end
+      end
+    end
+  end
+
   filter :first_name
   filter :last_name
   filter :email
@@ -24,8 +42,21 @@ ActiveAdmin.register User do
     column :coins
     column :contact_number
     column :gems
-    column :created_at
-    actions
+    column "Active" do |u|
+      !u.disabled
+    end
+    actions defaults: false do |user|
+      a 'View', href: admin_user_path(user)
+      a 'Edit', href: edit_admin_user_path(user)
+      item(
+        'Disable',
+        admin_user_path(user),
+        method: :delete,
+        data:{
+          confirm: 'Are you sure you want to delete this Content?'
+        }
+      )
+    end
   end
 
   form do |f|
